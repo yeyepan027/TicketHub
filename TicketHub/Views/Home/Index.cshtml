@@ -1,0 +1,49 @@
+﻿@{
+    ViewData["Title"] = "Home";
+}
+
+<div class="container py-5">
+    <div class="text-center mb-5">
+        <h1 class="display-4 fw-bold">Welcome to TicketHub</h1>
+        <p class="lead">Your one-stop platform for managing shows, events, and tickets.</p>
+
+        <div class="mt-4">
+            <a asp-controller="Shows" asp-action="Index" class="btn btn-primary btn-lg me-2">View All Shows</a>
+            <a asp-controller="Shows" asp-action="Create" class="btn btn-success btn-lg">Add New Show</a>
+        </div>
+    </div>
+
+    <hr class="my-5" />
+
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Shows</h5>
+                    <p class="card-text">Browse and manage your events and performances.</p>
+                    <a asp-controller="Shows" asp-action="Index" class="btn btn-outline-primary">Go to Shows</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Locations</h5>
+                    <p class="card-text">Manage event venues and their details.</p>
+                    <a asp-controller="Locations" asp-action="Index" class="btn btn-outline-primary">Go to Locations</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Owners</h5>
+                    <p class="card-text">View and manage show organizers.</p>
+                    <a asp-controller="Owners1" asp-action="Index" class="btn btn-outline-primary">Go to Owners</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
