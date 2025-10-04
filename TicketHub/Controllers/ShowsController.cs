@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 using TicketHub.Data;
 using TicketHub.Models;
 
@@ -22,27 +21,29 @@ namespace TicketHub.Controllers
         // GET: Shows
         public async Task<IActionResult> Index()
         {
-            var ticketHubContext = _context.Set<Show>().Include(s => s.Category).Include(s => s.Location).Include(s => s.Owner);
-            return View(await ticketHubContext.ToListAsync());
+            var shows = await _context.Show
+                .Include(s => s.Category)
+                .Include(s => s.Location)
+                .Include(s => s.Owner)
+                .ToListAsync();
+
+            return View(shows);
         }
 
         // GET: Shows/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
-            {
                 return NotFound();
-            }
 
-            var show = await _context.Set<Show>()
+            var show = await _context.Show
                 .Include(s => s.Category)
                 .Include(s => s.Location)
                 .Include(s => s.Owner)
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (show == null)
-            {
                 return NotFound();
-            }
 
             return View(show);
         }
@@ -50,32 +51,29 @@ namespace TicketHub.Controllers
         // GET: Shows/Create
         public IActionResult Create()
         {
-            ViewData["CategoryId"] = new SelectList(_context.Set<Category>(), "Id", "Name");
-            ViewData["LocationId"] = new SelectList(_context.Set<Location>(), "Id", "Name");
-            ViewData["OwnerId"] = new SelectList(_context.Set<Owner>(), "Id", "Name");
+            ViewBag.CategoryList = new SelectList(_context.Category, "Id", "Name");
+            ViewBag.LocationList = new SelectList(_context.Location, "Id", "Name");
+            ViewBag.OwnerList = new SelectList(_context.Owner, "Id", "Name");
             return View();
         }
 
         // POST: Shows/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Description,CategoryId,LocationId,OwnerId,Date,Time,CreateDate")] Show show)
+        public async Task<IActionResult> Create([Bind("Id,Title,Description,CategoryId,LocationId,OwnerId,Date,Time,ImageUrl,CreateDate")] Show show)
         {
-            // initialize CreateDate to current date and time
             show.CreateDate = DateTime.Now;
 
             if (ModelState.IsValid)
-
             {
                 _context.Add(show);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CategoryId"] = new SelectList(_context.Set<Category>(), "Id", "Name", show.CategoryId);
-            ViewData["LocationId"] = new SelectList(_context.Set<Location>(), "Id", "Name", show.LocationId);
-            ViewData["OwnerId"] = new SelectList(_context.Set<Owner>(), "Id", "Name", show.OwnerId);
+
+            ViewBag.CategoryList = new SelectList(_context.Category, "Id", "Name", show.CategoryId);
+            ViewBag.LocationList = new SelectList(_context.Location, "Id", "Name", show.LocationId);
+            ViewBag.OwnerList = new SelectList(_context.Owner, "Id", "Name", show.OwnerId);
             return View(show);
         }
 
@@ -83,32 +81,26 @@ namespace TicketHub.Controllers
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
-            {
                 return NotFound();
-            }
 
-            var show = await _context.Set<Show>().FindAsync(id);
+            var show = await _context.Show.FindAsync(id);
             if (show == null)
-            {
                 return NotFound();
-            }
-            ViewData["CategoryId"] = new SelectList(_context.Set<Category>(), "Id", "Id", show.CategoryId);
-            ViewData["LocationId"] = new SelectList(_context.Set<Location>(), "Id", "Id", show.LocationId);
-            ViewData["OwnerId"] = new SelectList(_context.Set<Owner>(), "Id", "Id", show.OwnerId);
+
+            ViewBag.CategoryList = new SelectList(_context.Category, "Id", "Name", show.CategoryId);
+            ViewBag.LocationList = new SelectList(_context.Location, "Id", "Name", show.LocationId);
+            ViewBag.OwnerList = new SelectList(_context.Owner, "Id", "Name", show.OwnerId);
+
             return View(show);
         }
 
         // POST: Shows/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,CategoryId,LocationId,OwnerId,Date,Time,CreateDate")] Show show)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,CategoryId,LocationId,OwnerId,Date,Time,ImageUrl,CreateDate")] Show show)
         {
             if (id != show.Id)
-            {
                 return NotFound();
-            }
 
             if (ModelState.IsValid)
             {
@@ -120,19 +112,16 @@ namespace TicketHub.Controllers
                 catch (DbUpdateConcurrencyException)
                 {
                     if (!ShowExists(show.Id))
-                    {
                         return NotFound();
-                    }
                     else
-                    {
                         throw;
-                    }
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CategoryId"] = new SelectList(_context.Set<Category>(), "Id", "Id", show.CategoryId);
-            ViewData["LocationId"] = new SelectList(_context.Set<Location>(), "Id", "Id", show.LocationId);
-            ViewData["OwnerId"] = new SelectList(_context.Set<Owner>(), "Id", "Id", show.OwnerId);
+
+            ViewBag.CategoryList = new SelectList(_context.Category, "Id", "Name", show.CategoryId);
+            ViewBag.LocationList = new SelectList(_context.Location, "Id", "Name", show.LocationId);
+            ViewBag.OwnerList = new SelectList(_context.Owner, "Id", "Name", show.OwnerId);
             return View(show);
         }
 
@@ -140,19 +129,16 @@ namespace TicketHub.Controllers
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
-            {
                 return NotFound();
-            }
 
-            var show = await _context.Set<Show>()
+            var show = await _context.Show
                 .Include(s => s.Category)
                 .Include(s => s.Location)
                 .Include(s => s.Owner)
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (show == null)
-            {
                 return NotFound();
-            }
 
             return View(show);
         }
@@ -162,19 +148,19 @@ namespace TicketHub.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var show = await _context.Set<Show>().FindAsync(id);
+            var show = await _context.Show.FindAsync(id);
             if (show != null)
             {
-                _context.Set<Show>().Remove(show);
+                _context.Show.Remove(show);
+                await _context.SaveChangesAsync();
             }
 
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool ShowExists(int id)
         {
-            return _context.Set<Show>().Any(e => e.Id == id);
+            return _context.Show.Any(e => e.Id == id);
         }
     }
 }

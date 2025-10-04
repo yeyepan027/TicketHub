@@ -10,50 +10,69 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="Edit" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
+
+            <div class="form-group">
+                <label asp-for="ImageUrl" class="control-label"></label>
+                <input asp-for="ImageUrl" class="form-control" id="imageUrlInput" placeholder="/images/SummerFestival.jpg" />
+                <span asp-validation-for="ImageUrl" class="text-danger"></span>
+            </div>
+
+            <!-- Image preview -->
+            <div class="form-group">
+                <img id="imagePreview" src="@Model.ImageUrl" alt="Image Preview" class="img-fluid mb-2" />
+            </div>
+
             <div class="mb-3">
                 <label asp-for="Title" class="control-label"></label>
                 <input asp-for="Title" class="form-control" />
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
+
             <div class="mb-3">
                 <label asp-for="Description" class="control-label"></label>
                 <input asp-for="Description" class="form-control" />
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
+
             <div class="mb-3">
                 <label asp-for="CategoryId" class="control-label"></label>
-                <select asp-for="CategoryId" class="form-control" asp-items="ViewBag.CategoryId"></select>
+                <select asp-for="CategoryId" class="form-control" asp-items="ViewBag.CategoryList"></select>
                 <span asp-validation-for="CategoryId" class="text-danger"></span>
             </div>
+
             <div class="mb-3">
                 <label asp-for="LocationId" class="control-label"></label>
-                <select asp-for="LocationId" class="form-control" asp-items="ViewBag.LocationId"></select>
+                <select asp-for="LocationId" class="form-control" asp-items="ViewBag.LocationList"></select>
                 <span asp-validation-for="LocationId" class="text-danger"></span>
             </div>
+
             <div class="mb-3">
                 <label asp-for="OwnerId" class="control-label"></label>
-                <select asp-for="OwnerId" class="form-control" asp-items="ViewBag.OwnerId"></select>
+                <select asp-for="OwnerId" class="form-control" asp-items="ViewBag.OwnerList"></select>
                 <span asp-validation-for="OwnerId" class="text-danger"></span>
             </div>
+
             <div class="mb-3">
                 <label asp-for="Date" class="control-label"></label>
                 <input asp-for="Date" class="form-control" />
                 <span asp-validation-for="Date" class="text-danger"></span>
             </div>
+
             <div class="mb-3">
                 <label asp-for="Time" class="control-label"></label>
                 <input asp-for="Time" class="form-control" />
                 <span asp-validation-for="Time" class="text-danger"></span>
             </div>
+
             <div class="mb-3">
                 <label asp-for="CreateDate" class="control-label"></label>
                 <input asp-for="CreateDate" class="form-control" />
                 <span asp-validation-for="CreateDate" class="text-danger"></span>
             </div>
-            
+
             <div class="mb-3">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
@@ -66,5 +85,12 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        document.getElementById('imageUrlInput').addEventListener('input', function () {
+            document.getElementById('imagePreview').src = this.value;
+        });
+    </script>
+    <script>
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    </script>
 }

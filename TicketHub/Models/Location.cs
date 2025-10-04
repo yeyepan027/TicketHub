@@ -1,4 +1,5 @@
-﻿using TicketHub.Models;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using TicketHub.Models;
 
 public class Location
 {
@@ -7,5 +8,5 @@ public class Location
     public string? Address { get; set; }       // Optional address
 
     // Navigation property – list of shows in this location
-    public List<Show>? Shows { get; set; }
+    public List<Show> Shows { get; set; } = new List<Show>();
 }

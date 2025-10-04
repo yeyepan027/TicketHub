@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TicketHub.Models
 {
@@ -12,15 +11,13 @@ namespace TicketHub.Models
 
         public string? Description { get; set; }
 
-        // Foreign key and navigation property for Category
-        public int CategoryId { get; set; }    // nullable if optional
+        // Foreign keys
+        public int CategoryId { get; set; }
         public Category? Category { get; set; }
 
-        // Foreign key and navigation property for Location
         public int LocationId { get; set; }
         public Location? Location { get; set; }
 
-        // Foreign key and navigation property for Owner
         public int OwnerId { get; set; }
         public Owner? Owner { get; set; }
 
@@ -30,7 +27,8 @@ namespace TicketHub.Models
         [DataType(DataType.Time)]
         public TimeSpan Time { get; set; }
 
-        public DateTime CreateDate { get; set; } = DateTime.Now;
+        public string? ImageUrl { get; set; }
 
+        public DateTime CreateDate { get; set; } = DateTime.Now;
     }
 }

@@ -19,13 +19,13 @@
                 @Html.DisplayNameFor(model => model.Description)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Category)
+                @Html.DisplayNameFor(model => model.CategoryId)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Location)
+                @Html.DisplayNameFor(model => model.LocationId)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Owner)
+                @Html.DisplayNameFor(model => model.OwnerId)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Date)
@@ -49,13 +49,13 @@
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Category.Id)
+                @Html.DisplayFor(modelItem => item.CategoryId)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Location.Id)
+                @Html.DisplayFor(modelItem => item.LocationId)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Owner.Id)
+                @Html.DisplayFor(modelItem => item.OwnerId)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Date)

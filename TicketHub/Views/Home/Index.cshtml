@@ -1,49 +1,56 @@
-﻿@{
+﻿@model IEnumerable<TicketHub.Models.Show>
+
+@{
     ViewData["Title"] = "Home";
 }
 
-<div class="container py-5">
-    <div class="text-center mb-5">
-        <h1 class="display-4 fw-bold">Welcome to TicketHub</h1>
-        <p class="lead">Your one-stop platform for managing shows, events, and tickets.</p>
+<div class="homepage-hero mb-5">
+    <h1 class="display-4 fw-bold">Welcome to TicketHub</h1>
+    <p class="lead">Your one-stop platform for managing shows, events, and tickets.</p>
 
-        <div class="mt-4">
-            <a asp-controller="Shows" asp-action="Index" class="btn btn-primary btn-lg me-2">View All Shows</a>
-            <a asp-controller="Shows" asp-action="Create" class="btn btn-success btn-lg">Add New Show</a>
-        </div>
-    </div>
-
-    <hr class="my-5" />
-
-    <div class="row g-4">
-        <div class="col-md-4">
-            <div class="card shadow-sm h-100">
-                <div class="card-body text-center">
-                    <h5 class="card-title">Shows</h5>
-                    <p class="card-text">Browse and manage your events and performances.</p>
-                    <a asp-controller="Shows" asp-action="Index" class="btn btn-outline-primary">Go to Shows</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-4">
-            <div class="card shadow-sm h-100">
-                <div class="card-body text-center">
-                    <h5 class="card-title">Locations</h5>
-                    <p class="card-text">Manage event venues and their details.</p>
-                    <a asp-controller="Locations" asp-action="Index" class="btn btn-outline-primary">Go to Locations</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-4">
-            <div class="card shadow-sm h-100">
-                <div class="card-body text-center">
-                    <h5 class="card-title">Owners</h5>
-                    <p class="card-text">View and manage show organizers.</p>
-                    <a asp-controller="Owners1" asp-action="Index" class="btn btn-outline-primary">Go to Owners</a>
-                </div>
-            </div>
-        </div>
+    <div class="mt-4">
+        <</>
     </div>
 </div>
+
+<hr class="my-5" />
+
+<h2 class="mb-4">Upcoming Events</h2>
+<table class="table table-bordered table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>Image</th>
+            <th>Title</th>
+            <th>Category</th>
+            <th>Location</th>
+            <th>Owner</th>
+            <th>Date</th>
+            <th>Time</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var show in Model)
+        {
+            <tr>
+                <td>
+                    @if (!string.IsNullOrEmpty(show.ImageUrl))
+                    {
+                        <img src="@show.ImageUrl" alt="Event Image" style="width: 100px; height: auto;" />
+                    }
+                    else
+                    {
+                        <span>No image</span>
+                    }
+                </td>
+
+              
+                <td>@show.Title</td>
+                <td>@show.Category?.Name</td>
+                <td>@show.Location?.Name</td>
+                <td>@show.Owner?.Name</td>
+                <td>@show.Date.ToShortDateString()</td>
+                <td>@show.Time.ToString(@"hh\:mm")</td>
+            </tr>
+        }
+    </tbody>
+</table>

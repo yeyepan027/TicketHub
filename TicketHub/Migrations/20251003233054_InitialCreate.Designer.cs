@@ -12,8 +12,8 @@ using TicketHub.Data;
 namespace TicketHub.Migrations
 {
     [DbContext(typeof(TicketHubContext))]
-    [Migration("20250925234355_RemovePhotoPath")]
-    partial class RemovePhotoPath
+    [Migration("20251003233054_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -100,6 +100,9 @@ namespace TicketHub.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("LocationId")

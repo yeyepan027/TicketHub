@@ -9,11 +9,11 @@ using TicketHub.Data;
 
 namespace TicketHub.Controllers
 {
-    public class Owners1Controller : Controller
+    public class OwnersController : Controller
     {
         private readonly TicketHubContext _context;
 
-        public Owners1Controller(TicketHubContext context)
+        public OwnersController(TicketHubContext context)
         {
             _context = context;
         }
