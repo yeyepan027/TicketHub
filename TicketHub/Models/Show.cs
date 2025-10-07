@@ -27,8 +27,6 @@ namespace TicketHub.Models
         [DataType(DataType.Time)]
         public TimeSpan Time { get; set; }
 
-        public string? ImageUrl { get; set; }
-
         public DateTime CreateDate { get; set; } = DateTime.Now;
     }
 }

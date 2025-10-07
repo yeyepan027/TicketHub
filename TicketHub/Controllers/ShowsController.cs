@@ -60,7 +60,7 @@ namespace TicketHub.Controllers
         // POST: Shows/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Description,CategoryId,LocationId,OwnerId,Date,Time,ImageUrl,CreateDate")] Show show)
+        public async Task<IActionResult> Create([Bind("Id,Title,Description,CategoryId,LocationId,OwnerId,Date,Time,CreateDate")] Show show)
         {
             show.CreateDate = DateTime.Now;
 
@@ -97,7 +97,7 @@ namespace TicketHub.Controllers
         // POST: Shows/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,CategoryId,LocationId,OwnerId,Date,Time,ImageUrl,CreateDate")] Show show)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,CategoryId,LocationId,OwnerId,Date,Time,CreateDate")] Show show)
         {
             if (id != show.Id)
                 return NotFound();

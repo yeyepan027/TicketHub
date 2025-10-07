@@ -19,7 +19,7 @@
 <table class="table table-bordered table-striped">
     <thead class="table-dark">
         <tr>
-            <th>Image</th>
+
             <th>Title</th>
             <th>Category</th>
             <th>Location</th>
@@ -32,16 +32,13 @@
         @foreach (var show in Model)
         {
             <tr>
-                <td>
-                    @if (!string.IsNullOrEmpty(show.ImageUrl))
-                    {
-                        <img src="@show.ImageUrl" alt="Event Image" style="width: 100px; height: auto;" />
-                    }
-                    else
-                    {
-                        <span>No image</span>
-                    }
-                </td>
+ 
+
+
+
+
+
+
 
               
                 <td>@show.Title</td>
@@ -49,7 +46,7 @@
                 <td>@show.Location?.Name</td>
                 <td>@show.Owner?.Name</td>
                 <td>@show.Date.ToShortDateString()</td>
-                <td>@show.Time.ToString(@"hh\:mm")</td>
+                <td>@show.Time</td>
             </tr>
         }
     </tbody>

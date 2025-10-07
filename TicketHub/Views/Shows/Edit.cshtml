@@ -14,16 +14,13 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
 
-            <div class="form-group">
-                <label asp-for="ImageUrl" class="control-label"></label>
-                <input asp-for="ImageUrl" class="form-control" id="imageUrlInput" placeholder="/images/SummerFestival.jpg" />
-                <span asp-validation-for="ImageUrl" class="text-danger"></span>
-            </div>
 
-            <!-- Image preview -->
-            <div class="form-group">
-                <img id="imagePreview" src="@Model.ImageUrl" alt="Image Preview" class="img-fluid mb-2" />
-            </div>
+
+
+
+
+
+
 
             <div class="mb-3">
                 <label asp-for="Title" class="control-label"></label>
@@ -85,11 +82,13 @@
 </div>
 
 @section Scripts {
-    <script>
-        document.getElementById('imageUrlInput').addEventListener('input', function () {
-            document.getElementById('imagePreview').src = this.value;
-        });
-    </script>
+
+
+
+
+
+
+
     <script>
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     </script>

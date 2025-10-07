@@ -4,8 +4,6 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
-
 <h4>Add New Show</h4>
 <hr />
 <div class="row">
@@ -13,18 +11,13 @@
         <form asp-action="Create" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-            <div class="form-group">
-                <label asp-for="ImageUrl" class="control-label"></label>
-                <div class="form-group">
-                    <label asp-for="ImageUrl" class="control-label"></label>
-                    <input asp-for="ImageUrl" class="form-control" id="imageUrlInput" placeholder="/images/SummerFestival.jpg" />
-                    <span asp-validation-for="ImageUrl" class="text-danger"></span>
-                </div>
-                <span asp-validation-for="ImageUrl" class="text-danger"></span>
-            </div>
 
-                <!-- Dynamic image preview -->
-                <img id="imagePreview" src="" class="img-fluid mt-2" alt="Preview"  />
+
+
+
+
+
+
 
 
 
@@ -89,12 +82,11 @@
 
 
 @section Scripts {
-    <script>
-        
-            document.getElementById('imageUrlInput').addEventListener('input', function () {
-            document.getElementById('imagePreview').src = this.value;
-        });
-    </script>
+
+
+
+
+
     <script>
         @{
             await Html.RenderPartialAsync("_ValidationScriptsPartial");
