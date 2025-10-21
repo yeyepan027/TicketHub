@@ -15,45 +15,60 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3"><!-- Navigation bar with Bootstrap classes -->
             <div class="container-fluid">
-                <a class="navbar-brand" asp-controller="Home" asp-action="Index">TicketHub</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse"
+                <a class="navbar-brand" asp-controller="Home" asp-action="Index">TicketHub</a> <!-- Brand link to home page -->
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" 
                         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
+                    <span class="navbar-toggler-icon"></span> <!-- Icon for toggling the navbar on small screens -->
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between"> <!-- Collapsible navbar content -->
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Shows" asp-action="Index">Shows</a>
+                            <a class="nav-link text-dark" asp-controller="Shows" asp-action="Index">Shows</a> <!-- Link to Shows page -->
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Locations" asp-action="Index">Locations</a>
+                            <a class="nav-link text-dark" asp-controller="Locations" asp-action="Index">Locations</a> <!-- Link to Locations page -->
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Owners" asp-action="Index">Owners</a>
+                            <a class="nav-link text-dark" asp-controller="Owners" asp-action="Index">Owners</a> <!-- Link to Owners page -->
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Categories" asp-action="Index">Categories</a>
+                            <a class="nav-link text-dark" asp-controller="Categories" asp-action="Index">Categories</a> <!-- Link to Categories page -->
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link text-dark" asp-controller="Home" asp-action="Privacy">Privacy</a> <!-- Link to Privacy page -->
                         </li>
                     </ul>
-                </div>
-            </div>
-        </nav>
+                    <ul class="navbar-nav">
+                        <!-- Check if the user is authenticated -->
+                        @if (User.Identity != null && User.Identity.IsAuthenticated)
+                     {
+                         <li class="nav-item">
+                                <span class="nav-link text-dark">Hello, @User.Identity.Name!</span> <!-- Greeting the authenticated user by name -->
+                         </li>
+                         <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="Account" asp-action="Logout">Logout</a> <!-- Link to Logout page -->
+                         </li>
+                         }
+                    </ul>
+                 </div>
+              </div>
+           </nav>
     </header>
 
     <div class="container">
+        <!-- Main container for page content -->
         <main role="main" class="pb-3">
-            @RenderBody()
+            <!-- Main content area with padding at the bottom -->
+            @RenderBody() <!-- Placeholder for rendering the body content of the views -->
         </main>
     </div>
 
     <footer class="border-top footer text-muted mt-5">
+        <!-- Footer with top border and margin at the top -->
         <div class="container">
-            &copy; 2025 - TicketHub - <a asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2025 - TicketHub - <a asp-controller="Home" asp-action="Privacy">Privacy</a> <!-- Footer content with link to Privacy page -->
         </div>
     </footer>
 

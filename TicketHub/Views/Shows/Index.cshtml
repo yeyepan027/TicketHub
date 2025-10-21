@@ -1,75 +1,95 @@
-﻿@model IEnumerable<TicketHub.Models.Show>
+﻿@model IEnumerable<TicketHub.Models.Show> 
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Index"; 
 }
 
-<h1>SHOWS</h1>
+<h1>SHOWS</h1> 
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Create New</a> <!-- Link to the Create action to add a new show -->
 </p>
 <table class="table">
+    <!-- Bootstrap-styled table to display the list of shows -->
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Title)
+                Image <!-- ✅ New column for event image -->
+            </th>
+
+
+            <th>
+                @Html.DisplayNameFor(model => model.Title) <!-- Gets the display name of the Title property -->
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Description)
+                @Html.DisplayNameFor(model => model.Description) 
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CategoryId)
+                @Html.DisplayNameFor(model => model.CategoryId) 
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.LocationId)
+                @Html.DisplayNameFor(model => model.LocationId) 
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.OwnerId)
+                @Html.DisplayNameFor(model => model.OwnerId) 
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Date)
+                @Html.DisplayNameFor(model => model.Date) 
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Time)
+                @Html.DisplayNameFor(model => model.Time) 
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CreateDate)
+                @Html.DisplayNameFor(model => model.CreateDate) 
             </th>
             <th></th>
         </tr>
     </thead>
-    <tbody>
+    <tbody> 
+        <!-- Loop through each show in the model and create a table row -->
 @foreach (var item in Model) {
         <tr>
+
             <td>
-                @Html.DisplayFor(modelItem => item.Title)
+                @if (!string.IsNullOrEmpty(item.ImageFilename))
+                {
+                    <img src="~/images/@item.ImageFilename" alt="Show Image" style="max-width:100px;max-height:100px;" />
+                }
+                else
+                {
+                    <span>No Image</span>
+                }
+            </td>
+
+            <td>
+                    @Html.DisplayFor(modelItem => item.Title) <!-- Displays the Title of the show -->
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Description)
+                    @Html.DisplayFor(modelItem => item.Description) 
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CategoryId)
+                    @Html.DisplayFor(modelItem => item.CategoryId) 
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.LocationId)
+                    @Html.DisplayFor(modelItem => item.LocationId) 
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.OwnerId)
+                    @Html.DisplayFor(modelItem => item.OwnerId) 
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Date)
+                    @Html.DisplayFor(modelItem => item.Date) 
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Time)
+                    @Html.DisplayFor(modelItem => item.Time) 
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CreateDate)
+                    @Html.DisplayFor(modelItem => item.CreateDate) 
             </td>
             <td>
+                    <!-- Action links: Edit, Details, Delete -->
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> 
             </td>
         </tr>
 }

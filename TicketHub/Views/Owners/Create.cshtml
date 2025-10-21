@@ -1,36 +1,40 @@
-﻿@model Owner
+﻿@model Owner 
 
 @{
     ViewData["Title"] = "Create";
 }
 
-<h4>Create New Owner</h4>
+<h4>Create New Owner</h4> 
 <hr />
+<!-- Bootstrap row for layout -->
 <div class="row">
+    <!-- Bootstrap column: limits form width to 4 columns on medium screens -->
     <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="mb-3">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+        <form asp-action="Create"><!-- Begin form that posts to the Create action -->
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div> <!-- Displays validation summary for model-level errors -->
+
+            <div class="mb-3"><!-- Form group for the 'Name' input field -->
+                <label asp-for="Name" class="control-label"></label> <!-- Label for the Name field -->
+                <input asp-for="Name" class="form-control" /> <!-- Text input for Name -->
+                <span asp-validation-for="Name" class="text-danger"></span> <!-- Validation message -->
+            </div>
+            <div class="mb-3"> <!-- Form group for the 'Email' input field -->
+                <label asp-for="Email" class="control-label"></label> 
+                <input asp-for="Email" class="form-control" /> 
+                <span asp-validation-for="Email" class="text-danger"></span> 
             </div>
             <div class="mb-3">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="mb-3">
+                <!-- Submit button to create the owner -->
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
+<div> 
+    <a asp-action="Index">Back to List</a> <!-- Link to go back to the owner list page -->
 </div>
-
+<!-- Section for client-side validation scripts -->
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

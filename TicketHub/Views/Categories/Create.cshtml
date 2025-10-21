@@ -1,21 +1,32 @@
-﻿@model Category
+﻿@model Category 
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Create"; 
 }
 
 
-<h4>Create New Category</h4>
+<h4>Create New Category</h4> 
 <hr />
+<!-- Bootstrap row for layout -->
 <div class="row">
+
+    <!-- Bootstrap column: limits form width to 4 columns on medium screens -->
     <div class="col-md-4">
+
+        <!-- Begin form that posts to the Create action -->
         <form asp-action="Create">
+
+            <!-- Displays validation summary for model-level errors -->
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <!-- Form group for the 'Name' input field -->
             <div class="mb-3">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+                <label asp-for="Name" class="control-label"></label> <!-- Label for the Name field -->
+                <input asp-for="Name" class="form-control" /> <!-- Text input for Name -->
+                <span asp-validation-for="Name" class="text-danger"></span> <!-- Validation message -->
             </div>
+
+            <!-- Submit button to create the category -->
             <div class="mb-3">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
@@ -24,9 +35,10 @@
 </div>
 
 <div>
+    <!-- Link to go back to the category list page -->
     <a asp-action="Index">Back to List</a>
 </div>
-
+<!-- Section for client-side validation scripts -->
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

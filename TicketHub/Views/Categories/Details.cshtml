@@ -1,15 +1,18 @@
 ﻿@model Category
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Details"; 
 }
 
-<h1>Details</h1>
+<h1>Details</h1> <!-- Main heading -->
 
 <div>
     <h4>Category</h4>
     <hr />
+
+    <!-- Definition list to display property labels and values -->
     <dl class="row">
+
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Name)
         </dt>
@@ -18,7 +21,10 @@
         </dd>
     </dl>
 </div>
+
 <div>
+    <!-- Link to edit the current category -->
     <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <!-- Link to go back to the category list -->
     <a asp-action="Index">Back to List</a>
 </div>

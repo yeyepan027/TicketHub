@@ -1,74 +1,80 @@
 ﻿@model TicketHub.Models.Show
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Create"; 
 }
 
-<h4>Add New Show</h4>
+<h4>Add New Show</h4> 
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create" method="post">
+        <!-- ✅ Form tag updated to support file uploads -->
+        <form asp-action="Create" enctype="multipart/form-data" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-
-
-
-
-
-
-
-
-
-
+            <!-- Title -->
             <div class="mb-3">
                 <label asp-for="Title" class="control-label"></label>
                 <input asp-for="Title" class="form-control" />
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
 
+            <!-- Description -->
             <div class="mb-3">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
+                <label asp-for="Description" class="control-label"></label> 
+                <input asp-for="Description" class="form-control" /> 
+                <span asp-validation-for="Description" class="text-danger"></span> 
             </div>
 
+            <!-- Category Dropdown -->
             <div class="mb-3">
                 <label asp-for="CategoryId" class="control-label"></label>
                 <select asp-for="CategoryId" class="form-control" asp-items="ViewBag.CategoryList"></select>
                 <span asp-validation-for="CategoryId" class="text-danger"></span>
             </div>
-
+            <!-- Location Dropdown -->
             <div class="mb-3">
                 <label asp-for="LocationId" class="control-label"></label>
                 <select asp-for="LocationId" class="form-control" asp-items="ViewBag.LocationList"></select>
                 <span asp-validation-for="LocationId" class="text-danger"></span>
             </div>
 
+            <!-- Owner Dropdown -->
             <div class="mb-3">
                 <label asp-for="OwnerId" class="control-label"></label>
                 <select asp-for="OwnerId" class="form-control" asp-items="ViewBag.OwnerList"></select>
                 <span asp-validation-for="OwnerId" class="text-danger"></span>
             </div>
 
+            <!-- Date -->
             <div class="mb-3">
-                <label asp-for="Date" class="control-label"></label>
-                <input asp-for="Date" class="form-control" />
-                <span asp-validation-for="Date" class="text-danger"></span>
+                <label asp-for="Date" class="control-label"></label>  
+                <input asp-for="Date" class="form-control" /> 
+                <span asp-validation-for="Date" class="text-danger"></span> 
             </div>
 
+            <!-- Time -->
             <div class="mb-3">
-                <label asp-for="Time" class="control-label"></label>
-                <input asp-for="Time" class="form-control" />
-                <span asp-validation-for="Time" class="text-danger"></span>
+                <label asp-for="Time" class="control-label"></label> 
+                <input asp-for="Time" class="form-control" /> 
+                <span asp-validation-for="Time" class="text-danger"></span> 
             </div>
 
+            <!-- Create Date -->
             <div class="mb-3">
-                <label asp-for="CreateDate" class="control-label"></label>
-                <input asp-for="CreateDate" class="form-control" />
-                <span asp-validation-for="CreateDate" class="text-danger"></span>
+                <label asp-for="CreateDate" class="control-label"></label> 
+                <input asp-for="CreateDate" class="form-control" /> 
+                <span asp-validation-for="CreateDate" class="text-danger"></span> 
             </div>
 
+            <!-- Image Upload Field (Optional) -->
+            <div class="mb-3">
+                <label asp-for="ImageFile" class="control-label">Event Image</label>
+                <input type="file" asp-for="ImageFile" class="form-control" />
+                <span asp-validation-for="ImageFile" class="text-danger"></span>
+            </div>
+
+            <!-- Submit Button -->
             <div class="mb-3">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
@@ -77,16 +83,10 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a href="@Url.Action("Index")">Back to List</a>
 </div>
 
-
 @section Scripts {
-
-
-
-
-
     <script>
         @{
             await Html.RenderPartialAsync("_ValidationScriptsPartial");

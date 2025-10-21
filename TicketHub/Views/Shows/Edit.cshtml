@@ -1,93 +1,109 @@
 ﻿@model TicketHub.Models.Show
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Edit"; 
 }
 
-<h1>Edit</h1>
+<h1>Edit</h1> 
 
-<h4>Show</h4>
+<h4>Show</h4> <!-- Container for the edit form -->
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit" method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
+<div class="row"><!-- Bootstrap row for layout -->
+    <div class="col-md-4"><!-- Bootstrap column: limits form width to 4 columns on medium screens -->
 
-
-
-
-
-
-
-
+        <form asp-action="Edit" method="post"> <!-- Begin form that posts to the Edit action -->
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div> 
+            <input type="hidden" asp-for="Id" /> 
 
             <div class="mb-3">
+                <!-- Form group for the 'Title' input field -->
                 <label asp-for="Title" class="control-label"></label>
                 <input asp-for="Title" class="form-control" />
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
 
-            <div class="mb-3">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
+            <div class="mb-3"><!-- Form group for the 'Title' input field -->
+                <label asp-for="Description" class="control-label"></label> <!--'Label for Description field ' -->
+
+                <input asp-for="Description" class="form-control" /> 
+                <span asp-validation-for="Description" class="text-danger"></span> 
             </div>
 
             <div class="mb-3">
-                <label asp-for="CategoryId" class="control-label"></label>
-                <select asp-for="CategoryId" class="form-control" asp-items="ViewBag.CategoryList"></select>
-                <span asp-validation-for="CategoryId" class="text-danger"></span>
+                <!-- Form group for the 'CategoryId' dropdown -->
+                <label asp-for="CategoryId" class="control-label"></label> <!-- Label for the CategoryId field -->
+                <select asp-for="CategoryId" class="form-control" asp-items="ViewBag.CategoryList"></select> <!-- Dropdown for selecting Category -->
+                <span asp-validation-for="CategoryId" class="text-danger"></span> 
             </div>
 
             <div class="mb-3">
-                <label asp-for="LocationId" class="control-label"></label>
-                <select asp-for="LocationId" class="form-control" asp-items="ViewBag.LocationList"></select>
+                <!-- Form group for the 'LocationId' dropdown -->
+                <label asp-for="LocationId" class="control-label"></label> <!-- Label for the LocationId field -->
+                <select asp-for="LocationId" class="form-control" asp-items="ViewBag.LocationList"></select> <!-- Dropdown for selecting Location -->
                 <span asp-validation-for="LocationId" class="text-danger"></span>
             </div>
 
             <div class="mb-3">
-                <label asp-for="OwnerId" class="control-label"></label>
-                <select asp-for="OwnerId" class="form-control" asp-items="ViewBag.OwnerList"></select>
-                <span asp-validation-for="OwnerId" class="text-danger"></span>
+                <!-- Form group for the 'OwnerId' dropdown -->
+                <label asp-for="OwnerId" class="control-label"></label> <!-- Label for the OwnerId field -->
+                <select asp-for="OwnerId" class="form-control" asp-items="ViewBag.OwnerList"></select> <!-- Dropdown for selecting Owner -->
+                <span asp-validation-for="OwnerId" class="text-danger"></span> 
             </div>
 
             <div class="mb-3">
-                <label asp-for="Date" class="control-label"></label>
-                <input asp-for="Date" class="form-control" />
-                <span asp-validation-for="Date" class="text-danger"></span>
+                <!-- Form group for the 'Date' input field -->
+                <label asp-for="Date" class="control-label"></label> 
+                <input asp-for="Date" class="form-control" /> 
+                <span asp-validation-for="Date" class="text-danger"></span> 
             </div>
 
             <div class="mb-3">
-                <label asp-for="Time" class="control-label"></label>
-                <input asp-for="Time" class="form-control" />
-                <span asp-validation-for="Time" class="text-danger"></span>
+                <!-- Form group for the 'Date' input field -->
+                <label asp-for="Time" class="control-label"></label> 
+                <input asp-for="Time" class="form-control" /> 
+                <span asp-validation-for="Time" class="text-danger"></span> 
             </div>
 
             <div class="mb-3">
-                <label asp-for="CreateDate" class="control-label"></label>
-                <input asp-for="CreateDate" class="form-control" />
-                <span asp-validation-for="CreateDate" class="text-danger"></span>
+                <!-- Form group for the 'CreateDate' input field -->
+                <label asp-for="CreateDate" class="control-label"></label> 
+                <input asp-for="CreateDate" class="form-control" /> 
+                <span asp-validation-for="CreateDate" class="text-danger"></span> 
             </div>
 
+            @if (!string.IsNullOrEmpty(Model.ImageFilename))
+            {
+                <div class="mb-3">
+                    <label>Current Image:</label><br />
+                    ~/images/@Model.ImageFilename
+                </div>
+            }
+            else
+            {
+                <div class="mb-3">
+                    <label>No image uploaded</label><br />
+                    ~/images/placeholder.jpg
+                </div>
+            }
+
             <div class="mb-3">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <label asp-for="ImageFile" class="control-label"></label>
+                <input type="file" asp-for="ImageFile" class="form-control" />
+                <span asp-validation-for="ImageFile" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3"> 
+                <input type="submit" value="Save" class="btn btn-primary" /> <!-- Submit button to save changes -->
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Back to List</a> <!-- Link to go back to the show list page -->
 </div>
-
+<!-- Section for client-side validation scripts -->
 @section Scripts {
-
-
-
-
-
-
 
     <script>
         await Html.RenderPartialAsync("_ValidationScriptsPartial");

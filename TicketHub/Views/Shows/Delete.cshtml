@@ -1,4 +1,4 @@
-﻿@model TicketHub.Models.Show
+﻿@model TicketHub.Models.Show 
 
 @{
     ViewData["Title"] = "Delete";
@@ -6,64 +6,65 @@
 
 <h1>Delete</h1>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>Are you sure you want to delete this?</h3> <!-- Confirmation prompt -->
 <div>
-    <h4>Show</h4>
+    <h4>Show</h4> <!-- Container for show details and delete form -->
     <hr />
     <dl class="row">
+        <!-- Definition list to display show details -->
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Title)
+            @Html.DisplayNameFor(model => model.Title) <!-- Term or label for the Title -->
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Title)
+            @Html.DisplayFor(model => model.Title) <!-- Definition or value of the Title  -->
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Description)
+            @Html.DisplayNameFor(model => model.Description) 
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Description)
+            @Html.DisplayFor(model => model.Description) 
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CategoryId)
+            @Html.DisplayNameFor(model => model.CategoryId) 
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CategoryId)
+            @Html.DisplayFor(model => model.CategoryId) 
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.LocationId)
+            @Html.DisplayNameFor(model => model.LocationId) 
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.LocationId)
+            @Html.DisplayFor(model => model.LocationId) 
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.OwnerId)
+            @Html.DisplayNameFor(model => model.OwnerId) 
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.OwnerId)
+            @Html.DisplayFor(model => model.OwnerId) 
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Date)
+            @Html.DisplayNameFor(model => model.Date) 
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Date)
+            @Html.DisplayFor(model => model.Date) 
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Time)
+            @Html.DisplayNameFor(model => model.Time) 
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Time)
+            @Html.DisplayFor(model => model.Time) 
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CreateDate)
+            @Html.DisplayNameFor(model => model.CreateDate) 
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CreateDate)
+        <dd class = "col-sm-10"> 
+            @Html.DisplayFor(model => model.CreateDate) 
         </dd>
     </dl>
-    
+    <!-- Form to confirm deletion -->
     <form asp-action="Delete">
-        <input type="hidden" asp-for="Id" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
+        <input type="hidden" asp-for="Id" /> 
+        <input type="submit" value="Delete" class="btn btn-danger" /> | 
+        <a asp-action="Index">Back to List</a> <!-- Link to go back to the show list -->
     </form>
 </div>

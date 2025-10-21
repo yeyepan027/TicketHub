@@ -1,23 +1,32 @@
 ﻿@model Category
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Edit"; 
 }
 
-<h1>Edit</h1>
+<h1>Edit</h1> 
 
 <h4>Category</h4>
 <hr />
+
+<!-- Bootstrap row for layout -->
 <div class="row">
+    <!-- Bootstrap column: limits form width to 4 columns on medium screens -->
     <div class="col-md-4">
+        <!-- Begin form that posts to the Edit action -->
         <form asp-action="Edit">
+            <!-- Displays validation summary for model-level errors -->
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <!-- Hidden input to store the Category ID -->
             <input type="hidden" asp-for="Id" />
+            <!-- Form group for the 'Name' input field -->
             <div class="mb-3">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
+                <label asp-for="Name" class="control-label"></label> <!-- Label for the Name field -->
+                <input asp-for="Name" class="form-control" /> <!-- Text input for Name -->
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
+            <!-- Submit button to save changes -->
             <div class="mb-3">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
@@ -26,8 +35,11 @@
 </div>
 
 <div>
+    <!-- Navigation link to return to the category list -->
     <a asp-action="Index">Back to List</a>
 </div>
+
+<!-- Section for client-side validation scripts -->
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

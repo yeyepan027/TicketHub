@@ -1,52 +1,48 @@
 ﻿@model IEnumerable<TicketHub.Models.Show>
 
 @{
-    ViewData["Title"] = "Home";
+    ViewData["Title"] = "Home"; 
 }
 
+<!-- Hero section at the top of the homepage -->
 <div class="homepage-hero mb-5">
     <h1 class="display-4 fw-bold">Welcome to TicketHub</h1>
     <p class="lead">Your one-stop platform for managing shows, events, and tickets.</p>
 
     <div class="mt-4">
-        <</>
+       
     </div>
 </div>
 
 <hr class="my-5" />
 
-<h2 class="mb-4">Upcoming Events</h2>
-<table class="table table-bordered table-striped">
-    <thead class="table-dark">
+<h2 class="mb-4">Upcoming Events</h2> <!-- Section heading for the events table -->
+<table class="table table-bordered table-striped"> <!-- Table with borders and striped rows -->
+    <thead class="table-dark">    <!-- Table header with dark background -->
         <tr>
-
-            <th>Title</th>
-            <th>Category</th>
-            <th>Location</th>
-            <th>Owner</th>
-            <th>Date</th>
-            <th>Time</th>
+            <th>Image</th> <!-- column for event image -->
+            <th>Title</th> <!-- Column for show titles -->
+            <th>Category</th> <!-- Column for show categories -->
+            <th>Location</th> <!-- Column for show locations -->
+            <th>Owner</th> <!-- Column for show owners -->
+            <th>Date</th> <!-- Column for show dates -->
+            <th>Time</th> <!-- Column for show times -->
         </tr>
     </thead>
     <tbody>
+        <!-- Loop through each show in the model and create a table row -->
         @foreach (var show in Model)
         {
             <tr>
- 
-
-
-
-
-
-
-
-              
-                <td>@show.Title</td>
-                <td>@show.Category?.Name</td>
-                <td>@show.Location?.Name</td>
-                <td>@show.Owner?.Name</td>
-                <td>@show.Date.ToShortDateString()</td>
-                <td>@show.Time</td>
+                <td>
+                    <img src="~/images/@(string.IsNullOrEmpty(show.ImageFilename) ? "placeholder.png" : show.ImageFilename)" alt="Show Image" style="max-width:100px;max-height:100px;" />
+                </td>
+                <td>@show.Title</td> <!-- Display the title of the show -->
+                <td>@show.Category?.Name</td> <!-- Display the name of the category -->
+                <td>@show.Location?.Name</td> <!-- Display the name of the location -->
+                <td>@show.Owner?.Name</td>  <!-- Display the name of the owner -->
+                <td>@show.Date.ToShortDateString()</td> <!-- Display the date of the show in short format -->
+                <td>@show.Time</td> <!-- Display the time of the show -->
             </tr>
         }
     </tbody>

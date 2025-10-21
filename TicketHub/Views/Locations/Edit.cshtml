@@ -1,29 +1,33 @@
-﻿@model Location
+﻿@model Location 
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Edit"; 
 }
 
-<h1>Edit</h1>
+<h1>Edit</h1> 
 
-<h4>Location</h4>
+<h4>Location</h4> <!-- Container for the edit form -->
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
+
+<div class="row"> <!-- Bootstrap row for layout -->
+    <div class="col-md-4">  <!-- Bootstrap column: limits form width to 4 columns on medium screens -->
+        <form asp-action="Edit"> <!-- Begin form that posts to the Edit action -->
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div> <!-- Displays validation summary for model-level errors -->
+            <input type="hidden" asp-for="Id" /> <!-- Hidden input to store the Location ID -->
             <div class="mb-3">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+                <!-- Form group for the 'Name' input field -->
+                <label asp-for="Name" class="control-label"></label> <!-- Label for the Name field -->
+                <input asp-for="Name" class="form-control" /> <!-- Text input for Name -->
+                <span asp-validation-for="Name" class="text-danger"></span> <!-- Validation message -->
             </div>
             <div class="mb-3">
-                <label asp-for="Address" class="control-label"></label>
-                <input asp-for="Address" class="form-control" />
-                <span asp-validation-for="Address" class="text-danger"></span>
+                <!-- Form group for the 'Address' input field -->
+                <label asp-for="Address" class="control-label"></label> 
+                <input asp-for="Address" class="form-control" /> 
+                <span asp-validation-for="Address" class="text-danger"></span> 
             </div>
             <div class="mb-3">
+                <!-- Submit button to save changes -->
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
@@ -31,9 +35,10 @@
 </div>
 
 <div>
+    <!-- Navigation link to return to the location list -->
     <a asp-action="Index">Back to List</a>
 </div>
-
+<!-- Section for client-side validation scripts -->
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

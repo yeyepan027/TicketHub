@@ -1,37 +1,39 @@
-﻿@model IEnumerable<Location>
+﻿@model IEnumerable<Location> 
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Index"; 
 }
 
-<h1>LOCATION</h1>
+<h1>LOCATION</h1> 
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Create New</a> <!-- Link to the Create action to add a new location -->
 </p>
-<table class="table">
+<table class="table"><!-- Bootstrap-styled table to display the list of locations -->
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                @Html.DisplayNameFor(model => model.Name)<!-- Gets the display name of the Name property -->
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Address)
+                @Html.DisplayNameFor(model => model.Address) <!-- Gets the display name of the Address property -->
             </th>
             <th></th>
         </tr>
     </thead>
-    <tbody>
+    <tbody> 
+        <!-- Loop through each location in the model and create a table row -->
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Name)
+                    @Html.DisplayFor(modelItem => item.Name) <!-- Displays the Name of the location -->
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Address)
+                    @Html.DisplayFor(modelItem => item.Address) <!-- Displays the Address of the location -->
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <!-- Action links: Edit, Details, Delete -->
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> | 
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
             </td>
