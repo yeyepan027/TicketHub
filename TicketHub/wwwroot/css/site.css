@@ -40,3 +40,25 @@ body {
     text-align: center;
     border-radius: 10px;
 }
+
+body {
+    background: url('/images/homepagebackground.jpg') no-repeat center center fixed;
+    background-size: cover;
+    min-height: 100vh;
+}
+
+table {
+    background-color: rgba(255, 255, 255, 0.85) !important;
+    border-radius: 8px !important;
+    padding: 10px !important;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1) !important;
+}
+
+th {
+    background-color: rgba(255, 255, 255, 0.95) !important;
+    font-weight: bold !important;
+}
+
+td {
+    background-color: rgba(255, 255, 255, 0.75) !important;
+}

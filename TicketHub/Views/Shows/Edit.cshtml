@@ -1,76 +1,79 @@
-﻿@model TicketHub.Models.Show
+﻿sa Show/Edit.cshtml gusto ko sana makita parin yung actual image kesa sa placeholder lang. ito yung current Edit.cshtml:
+
+@model TicketHub.Models.Show
 
 @{
-    ViewData["Title"] = "Edit"; 
+    ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1> 
+<h1>Edit</h1>
 
-<h4>Show</h4> <!-- Container for the edit form -->
+<h4>Show</h4>
 <hr />
-<div class="row"><!-- Bootstrap row for layout -->
-    <div class="col-md-4"><!-- Bootstrap column: limits form width to 4 columns on medium screens -->
+<div class="row">
+    <div class="col-md-4">
+        <!--Added enctype for file upload -->
+        <form asp-action="Edit" enctype="multipart/form-data" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
 
-        <form asp-action="Edit" method="post"> <!-- Begin form that posts to the Edit action -->
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div> 
-            <input type="hidden" asp-for="Id" /> 
-
+            <!-- Title -->
             <div class="mb-3">
-                <!-- Form group for the 'Title' input field -->
                 <label asp-for="Title" class="control-label"></label>
                 <input asp-for="Title" class="form-control" />
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
 
-            <div class="mb-3"><!-- Form group for the 'Title' input field -->
-                <label asp-for="Description" class="control-label"></label> <!--'Label for Description field ' -->
-
-                <input asp-for="Description" class="form-control" /> 
-                <span asp-validation-for="Description" class="text-danger"></span> 
+            <!-- Description -->
+            <div class="mb-3">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
             </div>
 
+            <!-- Category -->
             <div class="mb-3">
-                <!-- Form group for the 'CategoryId' dropdown -->
-                <label asp-for="CategoryId" class="control-label"></label> <!-- Label for the CategoryId field -->
-                <select asp-for="CategoryId" class="form-control" asp-items="ViewBag.CategoryList"></select> <!-- Dropdown for selecting Category -->
-                <span asp-validation-for="CategoryId" class="text-danger"></span> 
+                <label asp-for="Category" class="control-label"></label>
+                <select asp-for="CategoryId" class="form-control" asp-items="ViewBag.CategoryList"></select>
+                <span asp-validation-for="CategoryId" class="text-danger"></span>
             </div>
 
+            <!-- Location -->
             <div class="mb-3">
-                <!-- Form group for the 'LocationId' dropdown -->
-                <label asp-for="LocationId" class="control-label"></label> <!-- Label for the LocationId field -->
-                <select asp-for="LocationId" class="form-control" asp-items="ViewBag.LocationList"></select> <!-- Dropdown for selecting Location -->
+                <label asp-for="Location" class="control-label"></label>
+                <select asp-for="LocationId" class="form-control" asp-items="ViewBag.LocationList"></select>
                 <span asp-validation-for="LocationId" class="text-danger"></span>
             </div>
 
+            <!-- Owner -->
             <div class="mb-3">
-                <!-- Form group for the 'OwnerId' dropdown -->
-                <label asp-for="OwnerId" class="control-label"></label> <!-- Label for the OwnerId field -->
-                <select asp-for="OwnerId" class="form-control" asp-items="ViewBag.OwnerList"></select> <!-- Dropdown for selecting Owner -->
-                <span asp-validation-for="OwnerId" class="text-danger"></span> 
+                <label asp-for="Owner" class="control-label"></label>
+                <select asp-for="OwnerId" class="form-control" asp-items="ViewBag.OwnerList"></select>
+                <span asp-validation-for="OwnerId" class="text-danger"></span>
             </div>
 
+            <!-- Date -->
             <div class="mb-3">
-                <!-- Form group for the 'Date' input field -->
-                <label asp-for="Date" class="control-label"></label> 
-                <input asp-for="Date" class="form-control" /> 
-                <span asp-validation-for="Date" class="text-danger"></span> 
+                <label asp-for="Date" class="control-label"></label>
+                <input asp-for="Date" class="form-control" type="date" />
+                <span asp-validation-for="Date" class="text-danger"></span>
             </div>
 
+            <!-- Time -->
             <div class="mb-3">
-                <!-- Form group for the 'Date' input field -->
-                <label asp-for="Time" class="control-label"></label> 
-                <input asp-for="Time" class="form-control" /> 
-                <span asp-validation-for="Time" class="text-danger"></span> 
+                <label asp-for="Time" class="control-label"></label>
+                <input asp-for="Time" class="form-control" type="time" />
+                <span asp-validation-for="Time" class="text-danger"></span>
             </div>
 
+            <!-- CreateDate -->
             <div class="mb-3">
-                <!-- Form group for the 'CreateDate' input field -->
-                <label asp-for="CreateDate" class="control-label"></label> 
-                <input asp-for="CreateDate" class="form-control" /> 
-                <span asp-validation-for="CreateDate" class="text-danger"></span> 
+                <label class="form-label fw-semibold">Date Created</label>
+                <input asp-for="CreateDate" class="form-control" type="date" />
+                <span asp-validation-for="CreateDate" class="text-danger"></span>
             </div>
 
+            <!-- Current Image Preview -->
             @if (!string.IsNullOrEmpty(Model.ImageFilename))
             {
                 <div class="mb-3">
@@ -86,26 +89,25 @@
                 </div>
             }
 
+            <!-- Upload New Image -->
             <div class="mb-3">
-                <label asp-for="ImageFile" class="control-label"></label>
+                <label asp-for="ImageFile" class="control-label">Upload New Image</label>
                 <input type="file" asp-for="ImageFile" class="form-control" />
                 <span asp-validation-for="ImageFile" class="text-danger"></span>
             </div>
 
-            <div class="mb-3"> 
-                <input type="submit" value="Save" class="btn btn-primary" /> <!-- Submit button to save changes -->
+            <!-- Submit -->
+            <div class="mb-3">
+                <input type="submit" value="Save" class="btn btn-primary" />
+                <a asp-action="Index">Back to List</a>
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a> <!-- Link to go back to the show list page -->
-</div>
-<!-- Section for client-side validation scripts -->
-@section Scripts {
 
-    <script>
+@section Scripts {
+    @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    </script>
+    }
 }

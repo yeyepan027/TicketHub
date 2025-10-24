@@ -1,40 +1,35 @@
 ﻿@model IEnumerable<Category>
 
 @{
-    ViewData["Title"] = "Index"; 
+    ViewData["Title"] = "CATEGORY";
 }
 
-<h1>CATEGORY</h1>
+<div class="container my-5 p-4 rounded shadow" style="background-color: rgba(255, 255, 255, 0.85);">
+    <h1 class="fw-bold text-center mb-4">CATEGORY</h1>
 
-<p>
-    <!-- Link to navigate to the Create view -->
-    <a asp-action="Create">Create New</a>
-</p>
-<!-- Table to display the list of categories -->
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name) <!-- Gets the display name of the Name property -->
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        <!-- Loop through each category in the model -->
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                    <!-- Display the Name of the category -->
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                    <!-- Action links: Edit, Details, Delete -->
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+    <p class="text-center mb-4">
+        <a asp-action="Create" class="btn btn-primary">Create New</a>
+    </p>
+
+    <table class="table table-hover table-bordered text-center">
+        <thead class="table-dark">
+            <tr>
+                <th>Name</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Name</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning btn-sm">Edit</a>
+                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info btn-sm">Details</a>
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

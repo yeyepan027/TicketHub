@@ -1,14 +1,17 @@
-﻿@{
+﻿
+
+@{
     ViewData["Title"] = "Logout";
 }
 
-<h2 class="mb-4">Logout</h2>
+<div class="d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+    <div class="p-4 bg-white rounded shadow" style="width: 400px;">
+        <h2 class="text-center mb-4 fw-bold">Logout</h2>
+        <p class="text-center mb-4">Are you sure you want to log out?</p>
 
-<p>Are you sure you want to log out?</p> <!-- Confirmation message for logging out -->
-
-<form asp-action="LogoutConfirmed" method="post"> 
-    <button type="submit" class="btn btn-danger">Logout</button> <!-- Submit button to confirm logout -->
-    <a asp-action="Index" class="btn btn-secondary">Cancel</a> <!-- Button to cancel and go back to the index page -->
-</form>
-
-
+        <form asp-action="LogoutConfirmed" method="post">
+            <button type="submit" class="btn btn-danger btn-sm">Logout</button>
+        <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</div>

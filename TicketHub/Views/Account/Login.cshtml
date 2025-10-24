@@ -1,19 +1,28 @@
-﻿
-<h1>Login</h1>
+﻿@{
+    ViewData["Title"] = "Login";
+}
 
-<form method="post" class="w-25">
+<div class="d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+    <div class="p-5 bg-white rounded shadow" style="width: 500px;">
+        <h2 class="text-center mb-4">Login</h2>
 
-    <div class="mb-3">
-        <label for="username" class="form-label">Username</label> <!-- Label for username input -->
-        <input type="text" id="username" name="username" class="form-control" /> <!-- Text input for username -->
+        <form method="post">
+            <!-- Username -->
+            <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" id="username" name="username" class="form-control" placeholder="Enter username" />
+            </div>
+
+            <!-- Password -->
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" id="password" name="password" class="form-control" placeholder="Enter password" />
+            </div>
+
+            <!-- Submit Button -->
+            <div class="d-grid">
+                <button type="submit" class="btn btn-primary">Login</button>
+            </div>
+        </form>
     </div>
-
-    <div class="mb-3">
-        <label for="password" class="form-label">Password</label> <!-- Label for password input -->
-        <input type="password" id="password" name="password" class="form-control" /> <!-- Password input for password -->
-    </div>
-
-    <div class="mb-3">
-        <button type="submit" class="btn btn-primary">Login</button> <!-- Submit button for the form -->
-    </div>
-</form>
+</div>
