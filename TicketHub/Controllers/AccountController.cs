@@ -8,68 +8,70 @@ namespace TicketHub.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly IConfiguration _config; 
-
-        public AccountController(IConfiguration config) // Inject IConfiguration to access appsettings.json
-        {
-            _config = config;
-        }
-
-        [AllowAnonymous] // Allow access without authentication
-        [HttpGet] // Display the login form
-        public IActionResult Login() // Display the login form
+        [AllowAnonymous]
+        [HttpGet]
+        public IActionResult Login()
         {
             return View();
         }
 
-        [AllowAnonymous] // Allow access without authentication
-        [HttpPost] 
-        public async Task<IActionResult> Login(string username, string password)  // Handle login form submission
+        [AllowAnonymous]
+        [HttpPost]
+        public async Task<IActionResult> Login(string username, string password)
         {
-            var configUsername = _config["AppUsername"];
-            var configPassword = _config["AppPassword"];
+            // Read credentials from Azure App Settings
+            var configUsername = Environment.GetEnvironmentVariable("AppUsername") ?? "";
+            var configPassword = Environment.GetEnvironmentVariable("AppPassword") ?? "";
 
-            if (username == configUsername && password == configPassword) // Validate credentials against appsettings.json
+            // Validate environment variables
+            if (string.IsNullOrEmpty(configUsername) || string.IsNullOrEmpty(configPassword))
             {
-                var claims = new List<Claim> // Create user claims
+                ViewBag.Error = "Configuration error: Missing credentials in App Settings.";
+                return View();
+            }
+
+            // Validate user input
+            if (username == configUsername && password == configPassword)
+            {
+                var claims = new List<Claim>
                 {
                     new Claim(ClaimTypes.NameIdentifier, username),
                     new Claim(ClaimTypes.Name, "Administrator"),
                 };
 
-                var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme); // Create claims identity
-                var principal = new ClaimsPrincipal(identity); // Create claims principal
+                var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                var principal = new ClaimsPrincipal(identity);
 
-                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal); // Sign in the user
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
 
-                string? returnUrl = Request.Query["returnUrl"]; // Redirect to returnUrl if specified
+                string? returnUrl = Request.Query["returnUrl"];
                 if (!string.IsNullOrEmpty(returnUrl))
                     return Redirect(returnUrl);
 
-                return RedirectToAction("Index", "Home"); // Redirect to home page after successful login
+                return RedirectToAction("Index", "Home");
             }
 
-            ViewBag.Error = "Invalid username or password."; // Display error message for invalid credentials
+            ViewBag.Error = "Invalid username or password.";
             return View();
         }
 
         [Authorize]
         [HttpGet]
-        public IActionResult Logout() // Display the logout confirmation page
+        public IActionResult Logout()
         {
             return View();
         }
 
         [Authorize]
         [HttpPost]
-        public async Task<IActionResult> LogoutConfirmed() // Handle logout confirmation
+        public async Task<IActionResult> LogoutConfirmed()
         {
-            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme); // Sign out the user
-            return RedirectToAction("Login", "Account"); // Redirect to login page after logout
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("Login", "Account");
         }
 
         [AllowAnonymous]
-        public IActionResult AccessDenied() // Display access denied page
+        public IActionResult AccessDenied()
         {
             return View();
         }
