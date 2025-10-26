@@ -7,10 +7,14 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container
 builder.Services.AddControllersWithViews();
 
-// Add EF Core DbContext
+// Add EF Core DbContext with retry logic
 builder.Services.AddDbContext<TicketHubContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("TicketHubContext")
-    ?? throw new InvalidOperationException("Connection string 'TicketHubContext' not found.")));
+    ?? throw new InvalidOperationException("Connection string 'TicketHubContext' not found."),
+    sqlOptions => sqlOptions.EnableRetryOnFailure(
+        maxRetryCount: 5,
+        maxRetryDelay: TimeSpan.FromSeconds(10),
+        errorNumbersToAdd: null)));
 
 // Add Cookie Authentication
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
@@ -38,15 +42,13 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.UseHttpsRedirection(); // redirect HTTP to HTTPS
-app.UseStaticFiles(); // for serving static files like CSS, JS, images
+app.UseHttpsRedirection();
+app.UseStaticFiles();
+app.UseRouting();
+app.UseAuthentication();
+app.UseAuthorization();
 
-app.UseRouting(); // for routing
-
-app.UseAuthentication(); // for cookie authentication
-app.UseAuthorization(); // for authorization
-
-app.MapControllerRoute( // default route
+app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 

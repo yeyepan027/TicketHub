@@ -1,9 +1,11 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TicketHub.Data;
 using TicketHub.Models;
 using Microsoft.AspNetCore.Authorization;
+using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
 
 namespace TicketHub.Controllers
 {
@@ -11,10 +13,16 @@ namespace TicketHub.Controllers
     public class HomeController : Controller
     {
         private readonly TicketHubContext _context;
+        private readonly BlobContainerClient _containerClient;
 
-        public HomeController(TicketHubContext context)
+        public HomeController(TicketHubContext context, IConfiguration config)
         {
             _context = context;
+
+            // ✅ Azure Blob Storage setup
+            var connectionString = config.GetConnectionString("AzureStorage");
+            var containerName = "tickethub-uploads"; 
+            _containerClient = new BlobContainerClient(connectionString, containerName);
         }
 
         // GET: Home/Index
@@ -47,15 +55,15 @@ namespace TicketHub.Controllers
 
             if (show.ImageFile != null)
             {
-                string fileName = Path.GetFileName(show.ImageFile.FileName);
-                string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", fileName);
-
-                using (var stream = new FileStream(filePath, FileMode.Create))
+                // ✅ Upload to Azure Blob Storage
+                var blobClient = _containerClient.GetBlobClient(show.ImageFile.FileName);
+                using (var stream = show.ImageFile.OpenReadStream())
                 {
-                    await show.ImageFile.CopyToAsync(stream);
+                    await blobClient.UploadAsync(stream, new BlobHttpHeaders { ContentType = show.ImageFile.ContentType });
                 }
 
-                show.ImageFilename = fileName;
+                // ✅ Save Blob URL to database
+                show.ImageFilename = blobClient.Uri.ToString();
             }
 
             if (ModelState.IsValid)
@@ -109,15 +117,14 @@ namespace TicketHub.Controllers
 
                 if (show.ImageFile != null)
                 {
-                    string fileName = Path.GetFileName(show.ImageFile.FileName);
-                    string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", fileName);
-
-                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    // ✅ Upload new image to Azure Blob Storage
+                    var blobClient = _containerClient.GetBlobClient(show.ImageFile.FileName);
+                    using (var stream = show.ImageFile.OpenReadStream())
                     {
-                        await show.ImageFile.CopyToAsync(stream);
+                        await blobClient.UploadAsync(stream, new BlobHttpHeaders { ContentType = show.ImageFile.ContentType });
                     }
 
-                    existingShow.ImageFilename = fileName;
+                    existingShow.ImageFilename = blobClient.Uri.ToString();
                 }
 
                 _context.Update(existingShow);
@@ -171,13 +178,12 @@ namespace TicketHub.Controllers
             var show = await _context.Show.FindAsync(id);
             if (show != null)
             {
+                // ✅ Delete from Azure Blob Storage
                 if (!string.IsNullOrEmpty(show.ImageFilename))
                 {
-                    string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", show.ImageFilename);
-                    if (System.IO.File.Exists(filePath))
-                    {
-                        System.IO.File.Delete(filePath);
-                    }
+                    var blobName = Path.GetFileName(show.ImageFilename);
+                    var blobClient = _containerClient.GetBlobClient(blobName);
+                    await blobClient.DeleteIfExistsAsync();
                 }
 
                 _context.Show.Remove(show);

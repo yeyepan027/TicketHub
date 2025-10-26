@@ -1,6 +1,4 @@
-﻿sa Show/Edit.cshtml gusto ko sana makita parin yung actual image kesa sa placeholder lang. ito yung current Edit.cshtml:
-
-@model TicketHub.Models.Show
+﻿@model TicketHub.Models.Show
 
 @{
     ViewData["Title"] = "Edit";
@@ -78,7 +76,7 @@
             {
                 <div class="mb-3">
                     <label>Current Image:</label><br />
-                    ~/images/@Model.ImageFilename
+                    @Model.ImageFilename
                 </div>
             }
             else

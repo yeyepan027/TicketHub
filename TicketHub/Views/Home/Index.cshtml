@@ -34,7 +34,7 @@
         {
             <tr>
                 <td>
-                    <img src="~/images/@(string.IsNullOrEmpty(show.ImageFilename) ? "default.png" : show.ImageFilename)" alt="Show Image" style="max-width:100px;" />
+                    <img src="@(string.IsNullOrEmpty(show.ImageFilename) ? "default.png" : show.ImageFilename)" alt="Show Image" style="max-width:100px;" />
                 </td>
                 <td>@show.Title</td>
                 <td>@show.Category?.Name</td>

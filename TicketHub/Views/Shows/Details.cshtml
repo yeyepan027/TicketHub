@@ -13,7 +13,7 @@
         <div class="text-center mb-4">
             @if (!string.IsNullOrEmpty(Model.ImageFilename))
             {
-                <img src="@Url.Content("~/images/" + Model.ImageFilename)" alt="Show Image" class="img-fluid rounded" />
+                <img src="@Url.Content(Model.ImageFilename)" alt="Show Image" class="img-fluid rounded" />
             }
         </div>
 
