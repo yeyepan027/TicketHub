@@ -19,42 +19,43 @@ namespace TicketHub.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(string username, string password)
         {
-            // Read credentials from Azure App Settings (Environment Variables)
-            var configUsername = Environment.GetEnvironmentVariable("AppUsername") ?? "";
-            var configPassword = Environment.GetEnvironmentVariable("AppPassword") ?? "";
-
-            // Check if environment variables are missing
-            if (string.IsNullOrEmpty(configUsername) || string.IsNullOrEmpty(configPassword))
+            try
             {
-                ViewBag.Error = "Configuration error: Missing credentials in App Settings.";
+                var configUsername = Environment.GetEnvironmentVariable("AppUsername") ?? "";
+                var configPassword = Environment.GetEnvironmentVariable("AppPassword") ?? "";
+
+                if (string.IsNullOrEmpty(configUsername) || string.IsNullOrEmpty(configPassword))
+                {
+                    ViewBag.Error = "Configuration error: Missing credentials in App Settings.";
+                    return View();
+                }
+
+                if (username == configUsername && password == configPassword)
+                {
+                    var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.NameIdentifier, username),
+                new Claim(ClaimTypes.Name, "Administrator"),
+            };
+
+                    var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                    var principal = new ClaimsPrincipal(identity);
+
+                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+                    return RedirectToAction("Index", "Home");
+                }
+
+                ViewBag.Error = "Invalid username or password.";
                 return View();
             }
-
-            // Validate credentials
-            if (username == configUsername && password == configPassword)
+            catch (Exception ex)
             {
-                var claims = new List<Claim>
-                {
-                    new Claim(ClaimTypes.NameIdentifier, username),
-                    new Claim(ClaimTypes.Name, "Administrator"),
-                };
-
-                var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-                var principal = new ClaimsPrincipal(identity);
-
-                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
-
-                string? returnUrl = Request.Query["returnUrl"];
-                if (!string.IsNullOrEmpty(returnUrl))
-                    return Redirect(returnUrl);
-
-                return RedirectToAction("Index", "Home");
+                // Log error for debugging
+                Console.WriteLine($"Login error: {ex.Message}");
+                ViewBag.Error = "An unexpected error occurred.";
+                return View();
             }
-
-            ViewBag.Error = "Invalid username or password.";
-            return View();
         }
-
         [Authorize]
         [HttpGet]
         public IActionResult Logout()
