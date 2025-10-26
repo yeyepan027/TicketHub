@@ -20,7 +20,7 @@ namespace TicketHub.Controllers
             _context = context;
 
             // ✅ Azure Blob Storage setup
-            var connectionString = config.GetConnectionString("AzureStorage");
+            var connectionString = config.GetConnectionString("AppAzureStorage");
             var containerName = "tickethub-uploads"; 
             _containerClient = new BlobContainerClient(connectionString, containerName);
         }
