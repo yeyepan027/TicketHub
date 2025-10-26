@@ -20,9 +20,17 @@ namespace TicketHub.Controllers
         public async Task<IActionResult> Login(string username, string password)
         {
             // Read credentials from Azure App Settings (Environment Variables)
-            var configUsername = Environment.GetEnvironmentVariable("AppUsername");
-            var configPassword = Environment.GetEnvironmentVariable("AppPassword");
+            var configUsername = Environment.GetEnvironmentVariable("AppUsername") ?? "";
+            var configPassword = Environment.GetEnvironmentVariable("AppPassword") ?? "";
 
+            // Check if environment variables are missing
+            if (string.IsNullOrEmpty(configUsername) || string.IsNullOrEmpty(configPassword))
+            {
+                ViewBag.Error = "Configuration error: Missing credentials in App Settings.";
+                return View();
+            }
+
+            // Validate credentials
             if (username == configUsername && password == configPassword)
             {
                 var claims = new List<Claim>
