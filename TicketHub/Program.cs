@@ -7,16 +7,25 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container
 builder.Services.AddControllersWithViews();
 
-// Add EF Core DbContext with retry logic
-builder.Services.AddDbContext<TicketHubContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("TicketHubContext")
-    ?? throw new InvalidOperationException("Connection string 'TicketHubContext' not found."),
-    sqlOptions => sqlOptions.EnableRetryOnFailure(
-        maxRetryCount: 5,
-        maxRetryDelay: TimeSpan.FromSeconds(10),
-        errorNumbersToAdd: null)));
+// ✅ Get connection string safely
+var connectionString = builder.Configuration.GetConnectionString("TicketHubContext");
 
-// Add Cookie Authentication
+if (string.IsNullOrEmpty(connectionString))
+{
+    Console.WriteLine("ERROR: Connection string 'TicketHubContext' not found. Check Azure App Settings > Connection Strings.");
+}
+else
+{
+    // ✅ Add EF Core DbContext with retry logic
+    builder.Services.AddDbContext<TicketHubContext>(options =>
+        options.UseSqlServer(connectionString,
+        sqlOptions => sqlOptions.EnableRetryOnFailure(
+            maxRetryCount: 5,
+            maxRetryDelay: TimeSpan.FromSeconds(10),
+            errorNumbersToAdd: null)));
+}
+
+// ✅ Add Cookie Authentication
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
@@ -27,7 +36,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.AccessDeniedPath = "/Account/AccessDenied";
     });
 
-// Add User Secrets 
+// ✅ Add User Secrets for local development
 if (builder.Environment.IsDevelopment())
 {
     builder.Configuration.AddUserSecrets<Program>();
@@ -35,7 +44,7 @@ if (builder.Environment.IsDevelopment())
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline
+// ✅ Configure the HTTP request pipeline
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
