@@ -7,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container
 builder.Services.AddControllersWithViews();
 
-// ✅ Get connection string safely
+// Get connection string safely
 var connectionString = builder.Configuration.GetConnectionString("TicketHubContext");
 
 if (string.IsNullOrEmpty(connectionString))
@@ -16,7 +16,7 @@ if (string.IsNullOrEmpty(connectionString))
 }
 else
 {
-    // ✅ Add EF Core DbContext with retry logic
+    //  Add EF Core DbContext with retry logic
     builder.Services.AddDbContext<TicketHubContext>(options =>
         options.UseSqlServer(connectionString,
         sqlOptions => sqlOptions.EnableRetryOnFailure(
@@ -25,7 +25,7 @@ else
             errorNumbersToAdd: null)));
 }
 
-// ✅ Add Cookie Authentication
+// Add Cookie Authentication
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
@@ -36,7 +36,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.AccessDeniedPath = "/Account/AccessDenied";
     });
 
-// ✅ Add User Secrets for local development
+// Add User Secrets for local development
 if (builder.Environment.IsDevelopment())
 {
     builder.Configuration.AddUserSecrets<Program>();
@@ -44,7 +44,7 @@ if (builder.Environment.IsDevelopment())
 
 var app = builder.Build();
 
-// ✅ Configure the HTTP request pipeline
+// Configure the HTTP request pipeline
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");

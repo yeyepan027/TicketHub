@@ -52,5 +52,12 @@ namespace TicketHub.Models
         [Display(Name = "Event Image")]
         public IFormFile? ImageFile { get; set; }
 
+
+
+
+        // ✅ Add this for purchases
+        public ICollection<Purchase> Purchases { get; set; } = new List<Purchase>();
+
+
     }
 }

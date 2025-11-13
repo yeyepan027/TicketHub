@@ -42,7 +42,27 @@
 
             <dt class="col-sm-4">Created</dt>
             <dd class="col-sm-8">@Model.CreateDate.ToString("MM/dd/yyyy")</dd>
+
+
         </dl>
+        
+            <!-- ✅ Purchases Section -->
+             <h4 class="mt-4">Purchases</h4>
+            @if (Model.Purchases != null && Model.Purchases.Count > 0)
+{
+            <ul class="list-group mb-3">
+            @foreach (var p in Model.Purchases)
+            {
+            <li class="list-group-item">
+                <strong>@p.CustomerName</strong> - @p.Tickets tickets
+            </li>
+            }
+            </ul>
+            }
+            else
+            {
+            <p class="text-muted">No purchases yet.</p>
+            }
 
         <!-- Buttons -->
         <div class="d-grid gap-2 mt-4">

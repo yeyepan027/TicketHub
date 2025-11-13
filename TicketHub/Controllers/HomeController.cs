@@ -32,6 +32,7 @@ namespace TicketHub.Controllers
                 .Include(s => s.Category)
                 .Include(s => s.Location)
                 .Include(s => s.Owner)
+                .Include(s => s.Purchases) // ✅ Add this
                 .ToListAsync();
 
             return View(shows);
@@ -147,6 +148,7 @@ namespace TicketHub.Controllers
                 .Include(s => s.Category)
                 .Include(s => s.Location)
                 .Include(s => s.Owner)
+                .Include(s => s.Purchases) // ✅ Add this
                 .FirstOrDefaultAsync(m => m.Id == id);
 
             if (show == null) return NotFound();
